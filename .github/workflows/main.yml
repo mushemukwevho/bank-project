@@ -17,7 +17,7 @@ jobs:
     - name: Build Docker image
       uses: actions/docker/cli@master
       with:
-        args: "build . --tag gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_APP_NAME }}"
+        args: "build . --tag eu.gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_APP_NAME }}"
 
     - name: Authenticate into Google Cloud Platform
       uses: actions/gcloud/auth@master
@@ -33,9 +33,9 @@ jobs:
       uses: actions/gcloud/cli@master
       with:
         entrypoint: sh
-        args: -c "docker push gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_APP_NAME }}"
+        args: -c "docker push eu.gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_APP_NAME }}"
 
     - name: Install beta commands and deploy
       uses: actions/gcloud/cli@master
       with:
-        args: "components install beta --quiet && gcloud beta run deploy ${{ secrets.GCLOUD_APP_NAME }} --quiet --image gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_APP_NAME }} --region europe-west2 --project ${{ secrets.GCLOUD_PROJECT }} --platform managed"
+        args: "components install beta --quiet && gcloud beta run deploy ${{ secrets.GCLOUD_APP_NAME }} --quiet --image eu.gcr.io/${{ secrets.GCLOUD_PROJECT }}/${{ secrets.GCLOUD_APP_NAME }} --region europe-west2 --project ${{ secrets.GCLOUD_PROJECT }} --platform managed"
